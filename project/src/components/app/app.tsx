@@ -1,59 +1,37 @@
 import {BrowserRouter, Route, Routes} from 'react-router-dom';
-import {AppRoute, AuthorizationStatus} from '../../const';
+import {AppRoute, AuthorizationValue} from '../utils/const';
+import MainPage from '../main/main-page';
+import SignIn from '../sign-in/sing-in';
+import MyList from '../my-list/my-list';
+import MoviePage from '../movie-page/movie-page';
+import AddReview from '../add-review/add-review';
+import VideoPlayer from '../video-player/player-play';
 import PrivateRoute from '../private-route/private-route';
-import Main from '../../pages/main/main';
-import AddReviewPage from '../../pages/add-review/add-review';
-import Film from '../../pages/movie-page/movie-page';
-import MyList from '../../pages/my-list/my-list';
-import SignIn from '../../pages/sign-in/sign-in';
-import Player from '../../pages/player/player';
-import Error from '../../pages/error/error';
+import NotFoundPage from '../../pages/not-fount-page';
+import ErrorRequestPage from '../../pages/error-request';
 
-type Props = {
-  name: string;
-  genre: string;
-  year: number;
-}
-
-function App({ name, genre, year }: Props): JSX.Element {
+function App(): JSX.Element {
   return (
     <BrowserRouter>
       <Routes>
-        <Route
-          path={AppRoute.Root}
-          element={<Main name={name} genre={genre} year={year} />}
+        <Route path={AppRoute.Main} element={<MainPage/>}/>
+        <Route path={AppRoute.SignIn} element={<SignIn />}/>
+        <Route path={AppRoute.MyList} element={
+          <PrivateRoute authorizationStatus={AuthorizationValue.Auth}>
+            <MyList />
+          </PrivateRoute>
+        }
         />
-        <Route
-          path={AppRoute.AddReview}
-          element={<AddReviewPage/>}
-        />
-        <Route
-          path={AppRoute.Film}
-          element={<Film/>}
-        />
-        <Route
-          path={AppRoute.MyList}
-          element={
-            <PrivateRoute authorizationStatus={AuthorizationStatus.NoAuth}>
-              <MyList/>
-            </PrivateRoute>
-          }
-        />
-        <Route
-          path={AppRoute.SignIn}
-          element={<SignIn/>}
-        />
-        <Route
-          path={AppRoute.Player}
-          element={<Player/>}
-        />
-        <Route
-          path={AppRoute.Error}
-          element={<Error/>}
-        />
+        <Route path={AppRoute.DefaultFilm} element={<MoviePage />} />
+        <Route path={AppRoute.DefaultVideoPlayer} element={<VideoPlayer />} />
+        <Route path={AppRoute.DefaultAddReview} element={<AddReview />} />
+        <Route path={AppRoute.NotFound} element={<NotFoundPage />} />
+        <Route path={AppRoute.ErrorRequest} element={<ErrorRequestPage />}/>
       </Routes>
     </BrowserRouter>
   );
+
 }
+
 
 export default App;
