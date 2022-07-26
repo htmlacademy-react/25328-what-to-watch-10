@@ -8,13 +8,13 @@ import BreadcrumbsElement from './breadcrumbs';
 import Spinner from '../spinner/spinner';
 import {getFilm} from '../../fetch/request-to-server';
 
-
 function AddReview() {
   const { id } = useParams();
   const [filmData, setFilmData] = useState<FilmDataType | null>(null);
+
   useEffect(() => {
     (async () => {
-      const data = await getFilm(String(id));
+      const data = await getFilm(Number(id));
       setFilmData(data);
     })();
   }, [id]);

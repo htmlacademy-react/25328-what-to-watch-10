@@ -1,63 +1,41 @@
-import {useState} from 'react';
+import React from 'react';
+import { useState } from 'react';
+import { RATING_STARS } from '../utils/const';
 
 function SubmitCommentForm(): JSX.Element {
-  const ratingValue = 0;
-  const commentValue = '';
-  const [, setRating] = useState(ratingValue);
-  const [comment, setComment] = useState(commentValue);
+  const [formData, setFormData] = useState({
+    rating: 0,
+    reviewText: '',
+  });
 
-  const ratingStarsChangeHandler: React.ChangeEventHandler<HTMLInputElement> = (evt) => {
-    const valueTargetElement = Number(evt.target.value);
-    setRating(valueTargetElement);
+  const handleFieldChange: React.ChangeEventHandler<HTMLInputElement & HTMLLabelElement & HTMLTextAreaElement> = (evt) => {
+    const {name, value} = evt.target;
+    setFormData({...formData, [name]: value});
   };
 
-  const textAreaChangeHandler: React.ChangeEventHandler<HTMLTextAreaElement> = (evt) => {
-    const valueTextArea = evt.target.value;
-    setComment(valueTextArea);
-  };
-
-  const formSubmitHandler: React.FormEventHandler<HTMLFormElement> = (evt) => {
+  const handleFormSubmit: React.FormEventHandler<HTMLFormElement> = (evt) => {
     evt.preventDefault();
   };
 
   return (
-    <form onSubmit={formSubmitHandler} action="#" className="add-review__form">
-      <div className="rating">
-        <div onChange={ratingStarsChangeHandler} className="rating__stars">
-          <input className="rating__input" id="star-10" type="radio" name="rating" value="10" />
-          <label className="rating__label" htmlFor="star-10">Rating 10</label>
-
-          <input className="rating__input" id="star-9" type="radio" name="rating" value="9" />
-          <label className="rating__label" htmlFor="star-9">Rating 9</label>
-
-          <input className="rating__input" id="star-8" type="radio" name="rating" value="8" />
-          <label className="rating__label" htmlFor="star-8">Rating 8</label>
-
-          <input className="rating__input" id="star-7" type="radio" name="rating" value="7" />
-          <label className="rating__label" htmlFor="star-7">Rating 7</label>
-
-          <input className="rating__input" id="star-6" type="radio" name="rating" value="6" />
-          <label className="rating__label" htmlFor="star-6">Rating 6</label>
-
-          <input className="rating__input" id="star-5" type="radio" name="rating" value="5" />
-          <label className="rating__label" htmlFor="star-5">Rating 5</label>
-
-          <input className="rating__input" id="star-4" type="radio" name="rating" value="4" />
-          <label className="rating__label" htmlFor="star-4">Rating 4</label>
-
-          <input className="rating__input" id="star-3" type="radio" name="rating" value="3" />
-          <label className="rating__label" htmlFor="star-3">Rating 3</label>
-
-          <input className="rating__input" id="star-2" type="radio" name="rating" value="2" />
-          <label className="rating__label" htmlFor="star-2">Rating 2</label>
-
-          <input className="rating__input" id="star-1" type="radio" name="rating" value="1" />
-          <label className="rating__label" htmlFor="star-1">Rating 1</label>
+    <form onSubmit={handleFormSubmit} className="add-review__form">
+      <div className='rating'>
+        <div onChange={handleFieldChange} className='rating__stars'>
+          {RATING_STARS.map((star) => (
+            <React.Fragment key={star}>
+              <input className='rating__input' id={`star-${star}`} type='radio' name='rating' value={star} />
+              <label className='rating__label' htmlFor={`star-${star}`}>Rating {star}</label>
+            </React.Fragment>
+          ))}
         </div>
       </div>
 
       <div className="add-review__text">
-        <textarea onChange={textAreaChangeHandler} value={comment} className="add-review__textarea" name="review-text" id="review-text" placeholder="Review text"></textarea>
+        <textarea
+          onChange={handleFieldChange}
+          className="add-review__textarea" name="review-text" id="review-text" placeholder="Review text"
+        >{formData.reviewText}
+        </textarea>
         <div className="add-review__submit">
           <button className="add-review__btn" type="submit">Post</button>
         </div>

@@ -1,5 +1,4 @@
 import {FilmsDataPropsType} from '../../../types/types';
-
 import Catalog from './catalog';
 import Footer from '../../footer/footer';
 

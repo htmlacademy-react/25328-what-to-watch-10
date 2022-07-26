@@ -1,5 +1,8 @@
 const ZERO_VALUE = 0;
+const SIXTY_VALUE = 60;
 const ERROR = 'error';
+const KEY_ESCAPE = 'Escape';
+const RATING_STARS = [10, 9, 8, 7, 6, 5, 4, 3, 2, 1];
 
 const enum RatingLevelCountValue {
   Zero = 0,
@@ -37,4 +40,4 @@ const enum AuthorizationValue {
   Unknown = 'Unknown',
 }
 
-export {ZERO_VALUE, ERROR, AppRoute, AuthorizationValue, RatingLevelCountValue, RatingLevel};
+export {ZERO_VALUE, SIXTY_VALUE, ERROR, RATING_STARS, KEY_ESCAPE, AppRoute, AuthorizationValue, RatingLevelCountValue, RatingLevel};
