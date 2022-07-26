@@ -1,21 +1,64 @@
-import {useLocation, useNavigate} from 'react-router-dom';
+import {useEffect, useState} from 'react';
+import {useNavigate, useParams} from 'react-router-dom';
+import {getFilm} from '../../fetch/request-to-server';
+import ErrorRequestPage from '../../pages/error-request';
 import {FilmDataType} from '../../types/types';
+import Spinner from '../spinner/spinner';
+import { KEY_ESCAPE } from '../utils/const';
+import { convertRunTime } from '../utils/utils';
 
 function VideoPlayer() {
+  const { id } = useParams();
   const navigate = useNavigate();
-  const location = useLocation();
+  const [state, setState] = useState<FilmDataType | null>(null);
+  const[error, setError] = useState(false);
 
-  const {videoLink} = location.state as FilmDataType;
+  useEffect(() => {
+    (async () => {
+      try {
+        const data = await getFilm(Number(id));
+        setState(data);
+      } catch (e) {
+        setError(true);
+      }
+    })();
+  }, [setState, id]);
 
-  const exitButtonClickHandler: React.MouseEventHandler<HTMLButtonElement> = () => {
+  useEffect(() => {
+    const onKeyDownEsc = (evt: KeyboardEvent) => {
+      if (evt.key === KEY_ESCAPE) {
+        evt.preventDefault();
+        navigate(-1);
+      }
+    };
+
+    document.addEventListener('keydown', onKeyDownEsc);
+    return () => {
+      document.removeEventListener('keydown', onKeyDownEsc);
+    };
+  });
+
+  const handleExitButtonClick: React.MouseEventHandler<HTMLButtonElement> = () => {
     navigate(-1);
   };
 
+  if(error) {
+    return <ErrorRequestPage />;
+  }
+
+  if(state === null){
+    return (
+      <Spinner />
+    );
+  }
+
+  const {name, posterImage, videoLink, runTime} : FilmDataType = state;
+
   return (
     <div className="player">
-      <video src={videoLink} className="player__video"></video>
+      <video src={videoLink} poster={posterImage} className="player__video" muted autoPlay></video>
 
-      <button onClick={exitButtonClickHandler} type="button" className="player__exit">Exit</button>
+      <button onClick={handleExitButtonClick} type="button" className="player__exit">Exit</button>
 
       <div className="player__controls">
         <div className="player__controls-row">
@@ -27,7 +70,7 @@ function VideoPlayer() {
             >Toggler
             </div>
           </div>
-          <div className="player__time-value">1:30:29</div>
+          <div className="player__time-value">{convertRunTime(runTime)}</div>
         </div>
 
         <div className="player__controls-row">
@@ -37,7 +80,7 @@ function VideoPlayer() {
             </svg>
             <span>Play</span>
           </button>
-          <div className="player__name">Transpotting</div>
+          <div className="player__name">{name}</div>
 
           <button type="button" className="player__full-screen">
             <svg viewBox="0 0 27 27" width="27" height="27">

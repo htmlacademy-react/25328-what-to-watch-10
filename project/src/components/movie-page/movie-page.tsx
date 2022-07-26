@@ -6,17 +6,27 @@ import {getRatingLevel, getStarringArrayToString} from '../utils/utils';
 import PageHeader from '../main/header-film-card/page-header';
 import { getFilm } from '../../fetch/request-to-server';
 import Spinner from '../spinner/spinner';
+import ErrorRequestPage from '../../pages/error-request';
 
 function MoviePage() {
   const navigate = useNavigate();
   const { id } = useParams();
   const [filmData, setFilmData] = useState<FilmDataType | null>(null);
+  const [error, setError] = useState(false);
+
   useEffect(() => {
     (async () => {
-      const data = await getFilm(String(id));
-      setFilmData(data);
+      try {const data = await getFilm(Number(id));
+        setFilmData(data);
+      } catch (e) {
+        setError(true);
+      }
     })();
   }, [id]);
+
+  if(error) {
+    return <ErrorRequestPage />;
+  }
 
   if(filmData === null){
     return (
@@ -24,12 +34,12 @@ function MoviePage() {
     );
   }
   const {name, genre, released, backgroundImage, posterImage, rating, scoresCount, description, director, starring}: FilmDataType = filmData;
-  const navigateToVideoPlayerClickHandler: React.MouseEventHandler<HTMLButtonElement> = () => {
+  const handleNavigateToVideoPlayerClick: React.MouseEventHandler<HTMLButtonElement> = () => {
     navigate(`${AppRoute.VideoPlayer}/${id}`, {state: filmData});
   };
 
-  const navigateToMyListClickHandler: React.MouseEventHandler<HTMLButtonElement> = () => {
-    navigate(`${AppRoute.MyList}/`, {state: filmData});
+  const handleNavigateToMyListClick: React.MouseEventHandler<HTMLButtonElement> = () => {
+    navigate(AppRoute.MyList);
   };
 
   return (
@@ -52,13 +62,13 @@ function MoviePage() {
             </p>
 
             <div className="film-card__buttons">
-              <button onClick={navigateToVideoPlayerClickHandler} className="btn btn--play film-card__button" type="button">
+              <button onClick={handleNavigateToVideoPlayerClick} className="btn btn--play film-card__button" type="button">
                 <svg viewBox="0 0 19 19" width="19" height="19">
                   <use xlinkHref="#play-s"></use>
                 </svg>
                 <span>Play</span>
               </button>
-              <button onClick={navigateToMyListClickHandler} className="btn btn--list film-card__button" type="button">
+              <button onClick={handleNavigateToMyListClick} className="btn btn--list film-card__button" type="button">
                 <svg viewBox="0 0 19 20" width="19" height="20">
                   <use xlinkHref="#add"></use>
                 </svg>

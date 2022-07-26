@@ -9,24 +9,19 @@ const enum RequestMethod {
 }
 
 const enum GetRequest {
-  Promo = '/promo/',
-  Films = '/films/',
+  Promo = '/promo',
+  Films = '/films',
   Similar = '/similar',
   Favorite = '/favorite',
-  Comments = '/comments/',
-  Login = '/login',
+  Comments = '/comments',
+  Login = '/login'
 }
-
-type ObjRequest = {
-  method: string,
-  headers: Headers,
-};
 
 const getPromoFilm = async () => {
   const link = `${linkToServer}${GetRequest.Promo}`;
   const headers: Headers = new Headers();
 
-  const objRequest: ObjRequest = {
+  const objRequest: RequestInit = {
     method: RequestMethod.Get,
     headers: headers,
   };
@@ -34,7 +29,8 @@ const getPromoFilm = async () => {
   try {
     const response = await fetch(link, objRequest);
     if (response.ok) {
-      return response.json();
+      const data = await response.json();
+      return data;
     }
     throw response;
   } catch {
@@ -46,7 +42,7 @@ const getFilmsList = async () => {
   const link = `${linkToServer}${GetRequest.Films}`;
   const headers: Headers = new Headers();
 
-  const objRequest: ObjRequest = {
+  const objRequest: RequestInit = {
     method: RequestMethod.Get,
     headers: headers,
   };
@@ -54,7 +50,8 @@ const getFilmsList = async () => {
   try {
     const response = await fetch(link, objRequest);
     if (response.ok) {
-      return response.json();
+      const data = await response.json();
+      return data;
     }
     throw response;
   } catch {
@@ -62,11 +59,27 @@ const getFilmsList = async () => {
   }
 };
 
-const getFilm = async (id:string) => {
-  const link = `${linkToServer}${GetRequest.Films}${id}`;
+const getFilm = async (idFilm: number) => {
+  const link = `${linkToServer}${GetRequest.Films}/${idFilm}`;
   const headers: Headers = new Headers();
 
-  const objRequest: ObjRequest = {
+  const objRequest: RequestInit = {
+    method: RequestMethod.Get,
+    headers: headers,
+  };
+  const response = await fetch(link, objRequest);
+  if (response.ok) {
+    const data = await response.json();
+    return data;
+  }
+  throw response;
+};
+
+const getCommentsFilm = async (idFilm: number) => {
+  const link = `${linkToServer}${GetRequest.Comments}/${idFilm}`;
+  const headers: Headers = new Headers();
+
+  const objRequest: RequestInit = {
     method: RequestMethod.Get,
     headers: headers,
   };
@@ -74,7 +87,8 @@ const getFilm = async (id:string) => {
   try {
     const response = await fetch(link, objRequest);
     if (response.ok) {
-      return response.json();
+      const data = await response.json();
+      return data;
     }
     throw response;
   } catch {
@@ -82,4 +96,4 @@ const getFilm = async (id:string) => {
   }
 };
 
-export {getPromoFilm, getFilmsList, getFilm};
+export {getPromoFilm, getFilmsList, getFilm, getCommentsFilm};

@@ -8,7 +8,7 @@ function BreadcrumbsElement({filmData}: FilmDataPropsType): JSX.Element {
     <nav className="breadcrumbs">
       <ul className="breadcrumbs__list">
         <li className="breadcrumbs__item">
-          <Link to={`${AppRoute.Film}/${id}`} className="breadcrumbs__link" state={filmData}>{name}</Link>
+          <Link to={`${AppRoute.Film}/${id}`} className="breadcrumbs__link">{name}</Link>
         </li>
         <li className="breadcrumbs__item">
           <div className="breadcrumbs__link">Add review</div>

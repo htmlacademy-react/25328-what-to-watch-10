@@ -44,6 +44,10 @@ type HeaderPropsType = {
   children: JSX.Element | JSX.Element[],
 }
 
+type FilmCardForCatalogPropsType = {
+  item: FilmDataType,
+};
+
 export type {
   FilmDataType,
   FilmsDataPropsType,
@@ -51,5 +55,6 @@ export type {
   DataFromServer,
   formDataSubmitType,
   LogoProps,
-  HeaderPropsType
+  HeaderPropsType,
+  FilmCardForCatalogPropsType
 };

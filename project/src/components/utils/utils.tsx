@@ -1,4 +1,4 @@
-import {RatingLevelCountValue, RatingLevel} from '../utils/const';
+import {RatingLevelCountValue, RatingLevel, SIXTY_VALUE, ZERO_VALUE} from '../utils/const';
 
 function getRatingLevel (ratingCount: number): string {
   switch (true) {
@@ -15,4 +15,17 @@ function getStarringArrayToString (starring: string[]): string {
   return starring.join(', ');
 }
 
-export {getRatingLevel, getStarringArrayToString};
+const convertRunTime = (runTime: number): string => {
+  switch (true) {
+    case (runTime < SIXTY_VALUE) : return `${runTime}m`;
+    case (runTime % SIXTY_VALUE === ZERO_VALUE) : return `${runTime / SIXTY_VALUE}h`;
+    case (runTime > SIXTY_VALUE) : {
+      const hours = Math.floor(runTime / SIXTY_VALUE);
+      const minutes = runTime - (hours * SIXTY_VALUE);
+      return `${hours}h ${minutes}m`;
+    }
+    default : throw new Error ('Невалидное значение');
+  }
+};
+
+export {getRatingLevel, getStarringArrayToString, convertRunTime};
