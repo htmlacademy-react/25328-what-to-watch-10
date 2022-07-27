@@ -26,6 +26,9 @@ const enum AppRoute {
   MyList = '/mylist',
   Film = '/films',
   DefaultFilm = '/films/:id',
+  OverviewFilm = '#overview',
+  DetailsFilm = '#details',
+  ReviewsFilm = '#reviews',
   VideoPlayer = '/player',
   DefaultVideoPlayer = '/player/:id',
   AddReview = 'review',
@@ -40,4 +43,21 @@ const enum AuthorizationValue {
   Unknown = 'Unknown',
 }
 
-export {ZERO_VALUE, SIXTY_VALUE, ERROR, RATING_STARS, KEY_ESCAPE, AppRoute, AuthorizationValue, RatingLevelCountValue, RatingLevel};
+const enum TabNames {
+  Overview = '#overview',
+  Details = '#details',
+  Reviews = '#reviews'
+}
+
+export {
+  ZERO_VALUE,
+  SIXTY_VALUE,
+  ERROR,
+  RATING_STARS,
+  KEY_ESCAPE,
+  AppRoute,
+  AuthorizationValue,
+  RatingLevelCountValue,
+  RatingLevel,
+  TabNames,
+};

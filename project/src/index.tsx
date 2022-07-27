@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './components/app/app';
 
-async function startApp(): Promise<void> {
+const startApp = async (): Promise<void> => {
   const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement,
   );
@@ -12,6 +12,6 @@ async function startApp(): Promise<void> {
       <App />
     </React.StrictMode>,
   );
-}
+};
 
 startApp();

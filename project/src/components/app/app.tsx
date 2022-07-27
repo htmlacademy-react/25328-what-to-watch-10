@@ -10,28 +10,25 @@ import PrivateRoute from '../private-route/private-route';
 import NotFoundPage from '../../pages/not-fount-page';
 import ErrorRequestPage from '../../pages/error-request';
 
-function App(): JSX.Element {
-  return (
-    <BrowserRouter>
-      <Routes>
-        <Route path={AppRoute.Main} element={<MainPage/>}/>
-        <Route path={AppRoute.SignIn} element={<SignIn />}/>
-        <Route path={AppRoute.MyList} element={
-          <PrivateRoute authorizationStatus={AuthorizationValue.Auth}>
-            <MyList />
-          </PrivateRoute>
-        }
-        />
-        <Route path={AppRoute.DefaultFilm} element={<MoviePage />} />
-        <Route path={AppRoute.DefaultVideoPlayer} element={<VideoPlayer />} />
-        <Route path={AppRoute.DefaultAddReview} element={<AddReview />} />
-        <Route path={AppRoute.NotFound} element={<NotFoundPage />} />
-        <Route path={AppRoute.ErrorRequest} element={<ErrorRequestPage />}/>
-      </Routes>
-    </BrowserRouter>
-  );
-
-}
+const App = (): JSX.Element => (
+  <BrowserRouter>
+    <Routes>
+      <Route path={AppRoute.Main} element={<MainPage />} />
+      <Route path={AppRoute.SignIn} element={<SignIn />} />
+      <Route path={AppRoute.MyList} element={
+        <PrivateRoute authorizationStatus={AuthorizationValue.Auth}>
+          <MyList />
+        </PrivateRoute>
+      }
+      />
+      <Route path={AppRoute.DefaultFilm} element={<MoviePage />} />
+      <Route path={AppRoute.DefaultVideoPlayer} element={<VideoPlayer />} />
+      <Route path={AppRoute.DefaultAddReview} element={<AddReview />} />
+      <Route path={AppRoute.NotFound} element={<NotFoundPage />} />
+      <Route path={AppRoute.ErrorRequest} element={<ErrorRequestPage />} />
+    </Routes>
+  </BrowserRouter>
+);
 
 
 export default App;

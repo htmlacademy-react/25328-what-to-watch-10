@@ -7,7 +7,7 @@ import {AppRoute, ERROR} from '../utils/const';
 import { getFilmsList, getPromoFilm } from '../../fetch/request-to-server';
 import Spinner from '../spinner/spinner';
 
-function MainPage(): JSX.Element {
+const MainPage = (): JSX.Element => {
   const [filmData, setFilmData] = useState<DataFromServer | null>(null);
 
   useEffect(() => {
@@ -43,6 +43,6 @@ function MainPage(): JSX.Element {
       <PageContent filmsList={filmsData}/>
     </React.Fragment>
   );
-}
+};
 
 export default MainPage;

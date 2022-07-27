@@ -7,7 +7,7 @@ import Spinner from '../spinner/spinner';
 import { KEY_ESCAPE } from '../utils/const';
 import { convertRunTime } from '../utils/utils';
 
-function VideoPlayer() {
+const VideoPlayer = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const [state, setState] = useState<FilmDataType | null>(null);
@@ -22,7 +22,7 @@ function VideoPlayer() {
         setError(true);
       }
     })();
-  }, [setState, id]);
+  }, [id]);
 
   useEffect(() => {
     const onKeyDownEsc = (evt: KeyboardEvent) => {
@@ -92,6 +92,6 @@ function VideoPlayer() {
       </div>
     </div>
   );
-}
+};
 
 export default VideoPlayer;
