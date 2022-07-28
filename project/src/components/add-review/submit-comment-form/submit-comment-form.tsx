@@ -1,16 +1,16 @@
 import React from 'react';
 import { useState } from 'react';
-import { RATING_STARS } from '../utils/const';
+import { RATING_STARS } from '../../utils/const';
 
-function SubmitCommentForm(): JSX.Element {
+const SubmitCommentForm = (): JSX.Element => {
   const [formData, setFormData] = useState({
     rating: 0,
     reviewText: '',
   });
 
   const handleFieldChange: React.ChangeEventHandler<HTMLInputElement & HTMLLabelElement & HTMLTextAreaElement> = (evt) => {
-    const {name, value} = evt.target;
-    setFormData({...formData, [name]: value});
+    const { name, value } = evt.target;
+    setFormData({ ...formData, [name]: value });
   };
 
   const handleFormSubmit: React.FormEventHandler<HTMLFormElement> = (evt) => {
@@ -42,6 +42,6 @@ function SubmitCommentForm(): JSX.Element {
       </div>
     </form>
   );
-}
+};
 
 export { SubmitCommentForm };

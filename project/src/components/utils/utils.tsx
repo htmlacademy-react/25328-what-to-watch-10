@@ -1,6 +1,6 @@
 import {RatingLevelCountValue, RatingLevel, SIXTY_VALUE, ZERO_VALUE} from '../utils/const';
 
-function getRatingLevel (ratingCount: number): string {
+const getRatingLevel = (ratingCount: number): string => {
   switch (true) {
     case (RatingLevelCountValue.Zero <= ratingCount && ratingCount < RatingLevelCountValue.Three): return RatingLevel.Bad;
     case (RatingLevelCountValue.Three <= ratingCount && ratingCount < RatingLevelCountValue.Five): return RatingLevel.Normal;
@@ -9,11 +9,7 @@ function getRatingLevel (ratingCount: number): string {
     case (ratingCount === RatingLevelCountValue.Ten): return RatingLevel.Awesome;
     default: throw new Error('ERROR');
   }
-}
-
-function getStarringArrayToString (starring: string[]): string {
-  return starring.join(', ');
-}
+};
 
 const convertRunTime = (runTime: number): string => {
   switch (true) {
@@ -28,4 +24,7 @@ const convertRunTime = (runTime: number): string => {
   }
 };
 
-export {getRatingLevel, getStarringArrayToString, convertRunTime};
+export {
+  getRatingLevel,
+  convertRunTime,
+};

@@ -1,14 +1,14 @@
 import {useEffect, useState} from 'react';
 import {useParams} from 'react-router-dom';
 import {FilmDataType} from '../../types/types';
-import {SubmitCommentForm} from './submit-comment-form';
+import {SubmitCommentForm} from './submit-comment-form/submit-comment-form';
 import HeaderElement from '../layout/header-layout';
 import SignOut from '../header/user-block/sign-out';
-import BreadcrumbsElement from './breadcrumbs';
+import BreadcrumbsElement from './breadcrumbs/breadcrumbs';
 import Spinner from '../spinner/spinner';
 import {getFilm} from '../../fetch/request-to-server';
 
-function AddReview() {
+const AddReview = () => {
   const { id } = useParams();
   const [filmData, setFilmData] = useState<FilmDataType | null>(null);
 
@@ -19,13 +19,13 @@ function AddReview() {
     })();
   }, [id]);
 
-  if(filmData === null){
+  if (filmData === null) {
     return (
       <Spinner />
     );
   }
 
-  const {name, backgroundImage, posterImage}: FilmDataType = filmData;
+  const { name, backgroundImage, posterImage }: FilmDataType = filmData;
 
   return (
     <section className="film-card film-card--full">
@@ -36,8 +36,8 @@ function AddReview() {
 
         <h1 className="visually-hidden">WTW</h1>
         <HeaderElement >
-          <BreadcrumbsElement filmData={filmData}/>
-          <SignOut/>
+          <BreadcrumbsElement filmData={filmData} />
+          <SignOut />
         </HeaderElement>
 
         <div className="film-card__poster film-card__poster--small">
@@ -50,6 +50,6 @@ function AddReview() {
       </div>
     </section>
   );
-}
+};
 
 export default AddReview;

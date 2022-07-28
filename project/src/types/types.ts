@@ -48,6 +48,17 @@ type FilmCardForCatalogPropsType = {
   item: FilmDataType,
 };
 
+type CommentDataType = {
+  comment: string,
+  date: Date,
+  id: number,
+  rating: number,
+  user: {
+    id: number,
+    name: string,
+  }
+};
+
 export type {
   FilmDataType,
   FilmsDataPropsType,
@@ -56,5 +67,6 @@ export type {
   formDataSubmitType,
   LogoProps,
   HeaderPropsType,
-  FilmCardForCatalogPropsType
+  FilmCardForCatalogPropsType,
+  CommentDataType,
 };
